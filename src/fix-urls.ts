@@ -12,7 +12,8 @@ const map_tiktok = {
 	".tiktok.com": ".vxtiktok.com",
 };
 
-function cleanAndFixUrls(str: string) {
+function cleanAndFixUrls(str: string): [boolean, string] {
+	let updated = false;
 	const urlRegex = /(https?:\/\/\S+)/gi;
 	const matches = str.match(urlRegex) || [];
 	const cleanedUrls = matches.map((urlString) => {
@@ -33,20 +34,17 @@ function cleanAndFixUrls(str: string) {
 			for (const [key, value] of Object.entries(map)) {
 				if (url.host.endsWith(key)) {
 					url.host = value;
+					updated = true;
 					break;
 				}
 			}
 
 			for (const [key, value] of Object.entries(map_tiktok)) {
-				if (url.host === key) {
+				if (url.host === key || url.host.endsWith(key)) {
 					url.host = url.host.replace(key, value);
 					url.search = '';
 					url.hash = '';
-					break;
-				} else if (url.host.endsWith(key)) {
-					url.host = url.host.replace(key, value);
-					url.search = '';
-					url.hash = '';
+					updated = true;
 					break;
 				}
 			}
@@ -60,7 +58,7 @@ function cleanAndFixUrls(str: string) {
 	});
 
 	// @ts-ignore
-	return str.replace(urlRegex, () => cleanedUrls.shift());
+	return [ updated, str.replace(urlRegex, () => cleanedUrls.shift()) ];
 }
 
 export { cleanAndFixUrls }

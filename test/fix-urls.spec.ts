@@ -21,7 +21,8 @@ describe('9gag, instagram, reddit, twitter, x', () => {
 
 	it('should fix 9gag, reddit, instagram, x, twitter urls and removing site tracking', async () => {
 		for (const [url, expected] of Object.entries(urls_to_test)) {
-			const updated_msg = cleanAndFixUrls(url);
+			const [ updated, updated_msg ] = cleanAndFixUrls(url);
+			expect(updated).toBe(true);
 			expect(updated_msg).toBe(expected);
 		}
 	});
@@ -39,7 +40,8 @@ describe('9gag, instagram, reddit, twitter, x', () => {
 	instagram url https://ddinstagram.com/reel/C7XX1y9XX9Q/
 	x url https://fixupx.com/someUser/status/1793138989769314393`;
 
-		const actual_msg = cleanAndFixUrls(msg);
+		const [ updated, actual_msg ] = cleanAndFixUrls(msg);
+		expect(updated).toBe(true);
 		expect(actual_msg).toBe(expected_msg);
 	});
 

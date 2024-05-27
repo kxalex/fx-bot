@@ -19,8 +19,8 @@ bot.command("start", async (ctx) => {
 
 bot.on("message::url", async (ctx) => {
 	if (ctx.msg.text) {
-		const updated_msg = cleanAndFixUrls(ctx.msg.text);
-		if (updated_msg) {
+		const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text);
+		if (updated) {
 			await ctx.deleteMessage();
 			await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
 				message_thread_id: ctx.msg.message_thread_id,
