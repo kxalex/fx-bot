@@ -17,15 +17,35 @@ bot.command("start", async (ctx) => {
 	await ctx.reply("Hello, world!");
 });
 
+bot.command("origin-post", async (ctx) => {
+	await ctx.reply("Hello, world!");
+});
+
 bot.on("message::url", async (ctx) => {
 	if (ctx.msg.text) {
 		const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text);
 		if (updated) {
-			await ctx.deleteMessage();
-			await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
-				message_thread_id: ctx.msg.message_thread_id,
-				disable_notification: true
-			});
+
+			const chatId = ctx.msg.chat.id || ctx.msg.from.id;
+
+			if (chatId === -1002018620826) {
+				try {
+					await ctx.deleteMessage();
+				} catch (err) {
+					console.error("Error deleting message: %s", err);
+				}
+
+				await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
+					message_thread_id: ctx.msg.message_thread_id,
+					disable_notification: true
+				});
+			} else {
+				await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
+					reply_to_message_id: ctx.msg.message_id,
+					message_thread_id: ctx.msg.message_thread_id,
+					disable_notification: true
+				});
+			}
 		}
 	}
 });

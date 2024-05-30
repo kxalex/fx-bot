@@ -1,6 +1,6 @@
 
 const map = {
-	"9gag.com": "fx9gag.kxalex.workers.dev",
+	// "9gag.com": "fx9gag.kxalex.workers.dev",
 	"instagram.com": "ddinstagram.com",
 	"twitter.com": "fxtwitter.com",
 	"x.com": "fixupx.com",
@@ -12,6 +12,20 @@ const map_tiktok = {
 	".tiktok.com": ".vxtiktok.com",
 };
 
+function removeUnwantedParameters(url: URL) {
+	const unwantedParams = ['utm_', 'fbclid', 'gclid', 'msclkid', 'igshid', 'igsh'];
+
+	for (const param of unwantedParams) {
+		const regex = new RegExp(`([?&])${param}[^&=]*=[^&]*(&?)`, 'gi');
+		url.search = url.search.replace(regex, (_match, p1, p2) => {
+			return p2 ? p1 : '';
+		});
+	}
+
+	url.search = url.search.replace(/[?&]$/, '');
+	url.hash = url.hash.replace(/[?&]$/, '');
+}
+
 function cleanAndFixUrls(str: string): [boolean, string] {
 	let updated = false;
 	const urlRegex = /(https?:\/\/\S+)/gi;
@@ -19,20 +33,10 @@ function cleanAndFixUrls(str: string): [boolean, string] {
 	const cleanedUrls = matches.map((urlString) => {
 		try {
 			const url = new URL(urlString);
-			const unwantedParams = ['utm_', 'fbclid', 'gclid', 'msclkid', 'igshid', 'igsh'];
-
-			for (const param of unwantedParams) {
-				const regex = new RegExp(`([?&])${param}[^&=]*=[^&]*(&?)`, 'gi');
-				url.search = url.search.replace(regex, (_match, p1, p2) => {
-					return p2 ? p1 : '';
-				});
-			}
-
-			url.search = url.search.replace(/[?&]$/, '');
-			url.hash = url.hash.replace(/[?&]$/, '');
 
 			for (const [key, value] of Object.entries(map)) {
-				if (url.host.endsWith(key)) {
+				if (url.host.endsWith(key) && !url.host.endsWith(value))  {
+					removeUnwantedParameters(url);
 					url.host = value;
 					updated = true;
 					break;
@@ -40,7 +44,8 @@ function cleanAndFixUrls(str: string): [boolean, string] {
 			}
 
 			for (const [key, value] of Object.entries(map_tiktok)) {
-				if (url.host === key || url.host.endsWith(key)) {
+				if ((url.host === key || url.host.endsWith(key)) && !url.host.endsWith(value)) {
+					removeUnwantedParameters(url);
 					url.host = url.host.replace(key, value);
 					url.search = '';
 					url.hash = '';
