@@ -23,29 +23,32 @@ bot.command("origin-post", async (ctx) => {
 
 bot.on("message::url", async (ctx) => {
 	if (ctx.msg.text) {
-		const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text);
-		if (updated) {
+		console.log("Received message: ", ctx.msg.text);
+		try {
+			const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text);
+			if (updated) {
+				const chatId = ctx.msg.chat.id || ctx.msg.from.id;
+				if (chatId === -1002018620826) {
+					try {
+						await ctx.deleteMessage();
+					} catch (err) {
+						console.error("Error deleting message: ", err);
+					}
 
-			const chatId = ctx.msg.chat.id || ctx.msg.from.id;
-
-			if (chatId === -1002018620826) {
-				try {
-					await ctx.deleteMessage();
-				} catch (err) {
-					console.error("Error deleting message: %s", err);
+					await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
+						message_thread_id: ctx.msg.message_thread_id,
+						disable_notification: true
+					});
+				} else {
+					await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
+						reply_to_message_id: ctx.msg.message_id,
+						message_thread_id: ctx.msg.message_thread_id,
+						disable_notification: true
+					});
 				}
-
-				await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
-					message_thread_id: ctx.msg.message_thread_id,
-					disable_notification: true
-				});
-			} else {
-				await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
-					reply_to_message_id: ctx.msg.message_id,
-					message_thread_id: ctx.msg.message_thread_id,
-					disable_notification: true
-				});
 			}
+		} catch (err) {
+			console.error("Error cleaning URL: ", ctx.msg.text, err);
 		}
 	}
 });
