@@ -1,30 +1,43 @@
-export interface Chat {
+interface Chat {
 	id: number;
 	name: string | undefined;
 	type: string;
 	settings: ChatSettings;
+	lastUpdatedDate: string;
 }
 
-export interface ChatSettings {
+interface ChatSettings {
 	deleteOriginalPost: boolean;
 }
 
-export async function getChat(chatId: string): Promise<Chat> {
-	const chat = await KV_CHATS.get<Chat>(chatId);
+function getChat(env: Env, chatId: number): Promise<Chat | null> {
+	return env.KV_CHATS.get<Chat>(chatId.toString());
+}
+
+async function createChat(env: Env, chatId: number, name: string, type: string): Promise<Chat> {
+	const newChat: Chat = {
+		id: chatId,
+		name: name,
+		type: type,
+		settings: {
+			deleteOriginalPost: false,
+		},
+		lastUpdatedDate: new Date().toISOString(),
+	};
+
+	await env.KV_CHATS.put(chatId.toString(), JSON.stringify(newChat));
+
+	return newChat;
+}
+
+async function getOrCreate(env: Env, chatId: number, name: string, type: string): Promise<Chat> {
+	const chat = await getChat(env, chatId);
 	if (chat === null) {
-		console.log(`Chat ${chatId} not found using default settings.`);
-		return {
-			id: parseInt(chatId),
-			name: undefined,
-			type: 'private',
-			settings: {
-				deleteOriginalPost: false,
-			},
-		};
+		console.log('Creating chat', chatId, name, type);
+		return createChat(env, chatId, name, type);
 	}
 	return chat;
 }
 
-export function createChat(chat: Chat): Promise<void> {
-	return KV_CHATS.put(chat.id.toString(), JSON.stringify(chat));
-}
+export { getChat, getOrCreate, createChat };
+export type { Chat };
