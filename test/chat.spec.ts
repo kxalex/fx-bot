@@ -1,5 +1,5 @@
 import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloudflare:test';
-import { describe, it, expect, beforeAll, beforeEach, afterEach, expectTypeOf } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, expectTypeOf, assertType } from 'vitest';
 import { getOrCreate, createChat, Chat, getChat } from '../src/chat';
 
 describe('Chat', () => {
@@ -20,23 +20,34 @@ describe('Chat', () => {
 	});
 
 	it('returns an existing chat if exists', async () => {
-		const chat = await getChat(env, 0);
-
-		expect(chat).not.toBeNull();
-		expectTypeOf(chat).toEqualTypeOf<Chat | null>({
+		const chat = await getOrCreate(env, 0, 'another chat', 'oops');
+		expect(chat).toMatchObject({
 			id: 0,
 			name: 'existing chat',
 			type: 'private',
 			settings: {
 				deleteOriginalPost: false,
 			},
-			lastUpdatedDate: 'string',
 		});
+	});
 
-		expect(chat.id).toBe(0);
-		expect(chat.name).toBe('existing chat');
-		expect(chat.type).toBe('private');
-		expect(chat.settings.deleteOriginalPost).toBe(false);
-		expect(chat.lastUpdatedDate).toBeTypeOf('string');
+	it('returns null if chat does not exist', async () => {
+		const chat = await getChat(env, 123);
+		expect(chat).toBeNull();
+	});
+
+	it('returns an existing chat if exists', async () => {
+		let chat = await getChat(env, 0);
+
+		expect(chat).not.toBeNull();
+		expect(chat).toBeTypeOf('object');
+		expect(chat).toMatchObject({
+			id: 0,
+			name: 'existing chat',
+			type: 'private',
+			settings: {
+				deleteOriginalPost: false,
+			},
+		});
 	});
 });

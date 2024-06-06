@@ -6,7 +6,7 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "start": "wrangler dev",
-    "test": "vitest",
+    "test": "vitest --typecheck --coverage",
     "cf-typegen": "wrangler types",
     "set-webhook": "curl \"https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook?url=$TELEGRAM_WEBHOOK_URL\"",
     "prettier": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" vitest.config.ts"
@@ -17,10 +17,11 @@
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "~0.4.1",
     "@cloudflare/workers-types": "~4.20240603.0",
+    "@vitest/coverage-istanbul": "^1.6.0",
     "prettier": "3.3.1",
     "typescript": "~5.4.5",
     "vitest": "1.5.3",
     "wrangler": "^3.59.0"
   },
-  "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724"
+  "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
 }

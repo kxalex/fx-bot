@@ -11,7 +11,7 @@ interface ChatSettings {
 }
 
 function getChat(env: Env, chatId: number): Promise<Chat | null> {
-	return env.KV_CHATS.get<Chat>(chatId.toString());
+	return env.KV_CHATS.get<Chat>(chatId.toString(), 'json');
 }
 
 async function createChat(env: Env, chatId: number, name: string, type: string): Promise<Chat> {
@@ -33,7 +33,6 @@ async function createChat(env: Env, chatId: number, name: string, type: string):
 async function getOrCreate(env: Env, chatId: number, name: string, type: string): Promise<Chat> {
 	const chat = await getChat(env, chatId);
 	if (chat === null) {
-		console.log('Creating chat', chatId, name, type);
 		return createChat(env, chatId, name, type);
 	}
 	return chat;

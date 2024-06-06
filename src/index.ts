@@ -6,12 +6,13 @@
  */
 import { Bot, webhookCallback } from 'grammy';
 import { handleBotUpdate, handleNonBotRequest } from './bot';
+import { ExecutionContext } from '@cloudflare/workers-types/experimental';
 
 // addEventListener('fetch', webhookCallback(bot, 'cloudflare'));
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+	async fetch(request: Request, env: Env, _ctx: ExecutionContext) {
 		console.log(request.headers.get('x-telegram-bot-api-secret-token'));
 
 		//if (request.headers.get('x-telegram-bot-api-secret-token') === env.BOT_SECRET_TOKEN) {
