@@ -1,14 +1,14 @@
-import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloudflare:test';
-import { describe, it, expect, beforeAll, beforeEach, afterEach, expectTypeOf, assertType } from 'vitest';
-import { getOrCreate, createChat, Chat, getChat } from '../src/chat';
+import { env } from 'cloudflare:test';
+import { describe, it, expect, beforeAll } from 'vitest';
+import { upsertChat, getChat, updateChatSettings } from '../src/Chat';
 
 describe('Chat', () => {
 	beforeAll(async () => {
-		await createChat(env, 0, 'existing chat', 'private');
+		await upsertChat(env, 0, 'existing chat', 'private');
 	});
 
 	it('creates a new chat if does not exist', async () => {
-		const chat = await getOrCreate(env, 123, 'test', 'group');
+		const chat = await upsertChat(env, 123, 'test', 'group');
 		expect(chat).toMatchObject({
 			id: 123,
 			name: 'test',
@@ -19,16 +19,32 @@ describe('Chat', () => {
 		});
 	});
 
-	it('returns an existing chat if exists', async () => {
-		const chat = await getOrCreate(env, 0, 'another chat', 'oops');
+	it('update an existing chat if exists', async () => {
+		const chat = await upsertChat(env, 0, 'another name', 'oops');
+		expect(chat).toMatchObject({
+			id: 0,
+			name: 'another name',
+			type: 'oops',
+			settings: {
+				deleteOriginalPost: false,
+			},
+		});
+	});
+
+	it('update chat settings if chat exists', async () => {
+		const chat = await updateChatSettings(env, 0, { deleteOriginalPost: true });
 		expect(chat).toMatchObject({
 			id: 0,
 			name: 'existing chat',
 			type: 'private',
 			settings: {
-				deleteOriginalPost: false,
+				deleteOriginalPost: true,
 			},
 		});
+	});
+
+	it("throw an error on update if chat doesn't exist", async () => {
+		expect(updateChatSettings(env, 123, { deleteOriginalPost: true })).rejects.toThrow('Chat does not exist');
 	});
 
 	it('returns null if chat does not exist', async () => {

@@ -13,8 +13,6 @@ import { ExecutionContext } from '@cloudflare/workers-types/experimental';
 // noinspection JSUnusedGlobalSymbols
 export default {
 	async fetch(request: Request, env: Env, _ctx: ExecutionContext) {
-		console.log(request.headers.get('x-telegram-bot-api-secret-token'));
-
 		//if (request.headers.get('x-telegram-bot-api-secret-token') === env.BOT_SECRET_TOKEN) {
 		const bot = new Bot(env.BOT_TOKEN);
 		await handleBotUpdate(bot, env);
