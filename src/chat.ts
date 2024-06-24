@@ -1,3 +1,5 @@
+import { Features } from './features';
+
 interface Chat {
 	id: number;
 	name: string | undefined;
@@ -8,6 +10,8 @@ interface Chat {
 
 interface ChatSettings {
 	deleteOriginalPost: boolean;
+	disabled: boolean;
+	features: Features;
 }
 
 function getChat(env: Env, chatId: number): Promise<Chat | null> {
@@ -23,6 +27,14 @@ async function upsertChat(env: Env, chatId: number, name: string, type: string):
 			type: type,
 			settings: {
 				deleteOriginalPost: false,
+				disabled: false,
+				features: {
+					gag: false,
+					instagram: true,
+					reddit: true,
+					x: true,
+					tiktok: true,
+				},
 			},
 			lastUpdatedDate: new Date().toISOString(),
 		};

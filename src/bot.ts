@@ -14,10 +14,14 @@ async function onMessageUrl(ctx: Filter<Context, 'message'>, env: Env) {
 	if (ctx.msg.text) {
 		console.log('Received message: ', ctx.msg.text);
 		try {
-			const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text);
+			const chatId = ctx.msg.chat.id || ctx.msg.from.id;
+			const chat = await upsertChat(env, chatId, ctx.msg.chat.title || ctx.msg.from.first_name, ctx.msg.chat.type);
+			if (chat.settings.disabled) {
+				return;
+			}
+
+			const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text, chat.settings.features);
 			if (updated) {
-				const chatId = ctx.msg.chat.id || ctx.msg.from.id;
-				const chat = await upsertChat(env, chatId, ctx.msg.chat.title || ctx.msg.from.first_name, ctx.msg.chat.type);
 				if (chat.settings.deleteOriginalPost) {
 					try {
 						await ctx.deleteMessage();
