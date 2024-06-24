@@ -1,32 +1,76 @@
+import { Features } from './features';
 
-const map = {
-	// "9gag.com": "fx9gag.kxalex.workers.dev",
-	"instagram.com": "ddinstagram.com",
-	"twitter.com": "fxtwitter.com",
-	"x.com": "fixupx.com",
-	"reddit.com": "rxddit.com",
-};
+const regex9gag = /^(www\.)?9gag\.com/i;
+const regexInstagram = /^(www\.)?instagram\.com/i;
+const regexX = /^(www\.)?x\.com/i;
+const regexTwitter = /^(www\.)?twitter\.com/i;
+const regexTiktok = /^(www\.|[a-z]{2}\.)?tiktok\.com/i;
+const regexReddit = /^(www\.)?reddit\.com/i;
 
-const map_tiktok = {
-	"tiktok.com": "vxtiktok.com",
-	".tiktok.com": ".vxtiktok.com",
-};
+const is9gag = (url: URL) => regex9gag.test(url.host);
+const isInstagram = (url: URL) => regexInstagram.test(url.host);
+const isTiktok = (url: URL) => regexTiktok.test(url.host);
+const isX = (url: URL) => regexTwitter.test(url.host) || regexX.test(url.host);
+const isReddit = (url: URL) => regexReddit.test(url.host);
 
-function removeUnwantedParameters(url: URL) {
-	const unwantedParams = ['utm_', 'fbclid', 'gclid', 'msclkid', 'igshid', 'igsh'];
-
-	for (const param of unwantedParams) {
-		const regex = new RegExp(`([?&])${param}[^&=]*=[^&]*(&?)`, 'gi');
-		url.search = url.search.replace(regex, (_match, p1, p2) => {
-			return p2 ? p1 : '';
-		});
+function fix9gag(url: URL): URL {
+	if (!is9gag(url)) {
+		return url;
 	}
 
-	url.search = url.search.replace(/[?&]$/, '');
-	url.hash = url.hash.replace(/[?&]$/, '');
+	const newUrl = new URL(url);
+	newUrl.host = 'fx9gag.kxalex.workers.dev';
+	return newUrl;
 }
 
-function cleanAndFixUrls(str: string): [boolean, string] {
+function fixInstagram(url: URL) {
+	if (!isInstagram(url)) {
+		return url;
+	}
+
+	const newUrl = new URL(url);
+	newUrl.host = 'ddinstagram.com';
+	return newUrl;
+}
+
+function fixTiktok(url: URL) {
+	if (!isTiktok(url)) {
+		return url;
+	}
+
+	const newUrl = new URL(url);
+	newUrl.host = url.host.replace('tiktok.com', 'vxtiktok.com');
+	return newUrl;
+}
+
+function fixX(url: URL): URL {
+	if (!isX(url)) {
+		return url;
+	}
+
+	const newUrl = new URL(url);
+	if (regexTwitter.test(url.host)) {
+		newUrl.host = url.host.replace('twitter.com', 'fxtwitter.com');
+	} else {
+		newUrl.host = url.host.replace('x.com', 'fixupx.com');
+	}
+	return newUrl;
+}
+
+function fixReddit(url: URL) {
+	const newUrl = new URL(url);
+	newUrl.host = 'rxddit.com';
+	return newUrl;
+}
+
+// mutates the URL object
+function clean(url: URL): URL {
+	url.search = '';
+	url.hash = '';
+	return url;
+}
+
+function cleanAndFixUrls(str: string, features: Features): [boolean, string] {
 	let updated = false;
 	const urlRegex = /(https?:\/\/\S+)/gi;
 	const matches = str.match(urlRegex) || [];
@@ -34,36 +78,48 @@ function cleanAndFixUrls(str: string): [boolean, string] {
 		try {
 			const url = new URL(urlString);
 
-			for (const [key, value] of Object.entries(map)) {
-				if (url.host.endsWith(key) && !url.host.endsWith(value))  {
-					removeUnwantedParameters(url);
-					url.host = value;
-					updated = true;
-					break;
-				}
+			let newUrl: URL;
+			if (is9gag(url) && features.gag) {
+				newUrl = clean(fix9gag(url));
+				updated = true;
+			} else if (isInstagram(url) && features.instagram) {
+				newUrl = clean(fixInstagram(url));
+				updated = true;
+			} else if (isX(url) && features.x) {
+				newUrl = clean(fixX(url));
+				updated = true;
+			} else if (isTiktok(url) && features.tiktok) {
+				newUrl = clean(fixTiktok(url));
+				updated = true;
+			} else if (isReddit(url) && features.reddit) {
+				newUrl = clean(fixReddit(url));
+				updated = true;
+			} else {
+				return urlString;
 			}
 
-			for (const [key, value] of Object.entries(map_tiktok)) {
-				if ((url.host === key || url.host.endsWith(key)) && !url.host.endsWith(value)) {
-					removeUnwantedParameters(url);
-					url.host = url.host.replace(key, value);
-					url.search = '';
-					url.hash = '';
-					updated = true;
-					break;
-				}
-			}
-
-			return url.toString();
+			return newUrl.toString();
 		} catch (err) {
 			// Skip invalid URLs
-			console.error("Error cleaning URL %s: %s", urlString, err);
+			console.error('Error cleaning URL %s: %s', urlString, err);
 			return urlString;
 		}
 	});
 
 	// @ts-ignore
-	return [ updated, str.replace(urlRegex, () => cleanedUrls.shift()) ];
+	return [updated, str.replace(urlRegex, () => cleanedUrls.shift())];
 }
 
-export { cleanAndFixUrls }
+export {
+	is9gag,
+	isInstagram,
+	isReddit,
+	isTiktok,
+	isX,
+	fix9gag,
+	fixInstagram,
+	fixReddit,
+	fixTiktok,
+	fixX,
+	cleanAndFixUrls,
+};
