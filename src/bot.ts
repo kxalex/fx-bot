@@ -3,7 +3,9 @@ import { cleanAndFixUrls } from './fix-urls';
 import { upsertChat } from './chat';
 
 async function startCommand(ctx: CommandContext<Context>): Promise<void> {
-	await ctx.reply('Hello, world!');
+	await ctx.reply(`*Hi\\!* _Welcome_ to [grammY](https://grammy.dev)\\.`, {
+		parse_mode: 'MarkdownV2',
+	});
 }
 
 async function onNewChatMembersMe(ctx: Context): Promise<void> {
@@ -15,13 +17,17 @@ async function onMessageUrl(ctx: Filter<Context, 'message'>, env: Env) {
 		console.log('Received message: ', ctx.msg.text);
 		try {
 			const chatId = ctx.msg.chat.id || ctx.msg.from.id;
-			const chat = await upsertChat(env, chatId, ctx.msg.chat.title || ctx.msg.from.first_name, ctx.msg.chat.type);
+			const chat = await upsertChat(env, chatId, ctx.msg.chat.title ?? ctx.msg.from.first_name, ctx.msg.chat.type);
 			if (chat.settings.disabled) {
+				console.log('Chat is disabled: %s', chatId);
 				return;
 			}
 
 			const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text, chat.settings.features);
+			console.log('Updated message: ', updated_msg);
 			if (updated) {
+				const msg = `${updated_msg}`;
+
 				if (chat.settings.deleteOriginalPost) {
 					try {
 						await ctx.deleteMessage();
@@ -29,12 +35,12 @@ async function onMessageUrl(ctx: Filter<Context, 'message'>, env: Env) {
 						console.error('Error deleting message: %s', err);
 					}
 
-					await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
+					await ctx.reply(msg, {
 						message_thread_id: ctx.msg.message_thread_id,
 						disable_notification: true,
 					});
 				} else {
-					await ctx.reply(`${updated_msg} (${ctx.msg.from.first_name})`, {
+					await ctx.reply(msg, {
 						reply_to_message_id: ctx.msg.message_id,
 						message_thread_id: ctx.msg.message_thread_id,
 						disable_notification: true,

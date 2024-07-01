@@ -13,6 +13,10 @@ const urls = [
 		'https://ddinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
 	],
 	[
+		'https://www.instagram.com/p/C8mqrf_ySBs/?igsh=MTRoN2I0NXdnaXkwYw%3D%3D&img_index=5',
+		'https://ddinstagram.com/p/C8mqrf_ySBs/?igsh=MTRoN2I0NXdnaXkwYw%3D%3D&img_index=5',
+	],
+	[
 		'https://instagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
 		'https://ddinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
 	],

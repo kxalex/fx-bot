@@ -19,7 +19,7 @@ function fix9gag(url: URL): URL {
 	}
 
 	const newUrl = new URL(url);
-	newUrl.host = 'fx9gag.kxalex.workers.dev';
+	newUrl.host = 'fx9gag.com';
 	return newUrl;
 }
 

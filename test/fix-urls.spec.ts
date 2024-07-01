@@ -5,7 +5,7 @@ import { allFeaturesEnabled } from './fix-urls-common';
 describe('all in one message', () => {
 	it('should fix multiple urls in the message', async () => {
 		const msg = `Test message https://9gag.com/gag/avb3v?utm_source=ig
-	fx9gag with tracking https://fx9gag.kxalex.workers.dev/gag/avb3v
+	fx9gag with tracking https://fx9gag.com/gag/avb3v
 	9gag with tracking https://9gag.com/gag/avb3v?utm_source=ig
 	rxddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
 	reddit url https://reddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
@@ -15,9 +15,9 @@ describe('all in one message', () => {
 	x url https://x.com/someUser/status/1793138989769314393
 	`;
 
-		const expected_msg = `Test message https://fx9gag.kxalex.workers.dev/gag/avb3v
-	fx9gag with tracking https://fx9gag.kxalex.workers.dev/gag/avb3v
-	9gag with tracking https://fx9gag.kxalex.workers.dev/gag/avb3v
+		const expected_msg = `Test message https://fx9gag.com/gag/avb3v
+	fx9gag with tracking https://fx9gag.com/gag/avb3v
+	9gag with tracking https://fx9gag.com/gag/avb3v
 	rxddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
 	reddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
 	ddinstagram url https://ddinstagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa

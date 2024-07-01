@@ -2,28 +2,31 @@ import { describe, expect, it } from 'vitest';
 import { fix9gag, is9gag } from '../src/fix-urls';
 import { cleanAndFixUrlsTest } from './fix-urls-common';
 
+// prettier-ignore
 const urls = [
-	// prettier-ignore
 	[
 		'https://9gag.com/gag/avb3v',
-		'https://fx9gag.kxalex.workers.dev/gag/avb3v'
+		'https://fx9gag.com/gag/avb3v'
 	],
 	[
 		'https://9gag.com/gag/avb3v?utm_source=ig&fbclid=123',
-		'https://fx9gag.kxalex.workers.dev/gag/avb3v?utm_source=ig&fbclid=123',
+		'https://fx9gag.com/gag/avb3v?utm_source=ig&fbclid=123'
 	],
 	[
 		'https://9gag.com/gag/avb3v?utm_source=ig&fbclid=123&gclid=123',
-		'https://fx9gag.kxalex.workers.dev/gag/avb3v?utm_source=ig&fbclid=123&gclid=123',
+		'https://fx9gag.com/gag/avb3v?utm_source=ig&fbclid=123&gclid=123',
 	],
-	['https://www.9gag.com/gag/avb3v', 'https://fx9gag.kxalex.workers.dev/gag/avb3v'],
+	[
+ 		'https://www.9gag.com/gag/avb3v',
+		'https://fx9gag.com/gag/avb3v'
+	],
 	[
 		'https://www.9gag.com/gag/avb3v?utm_source=ig&fbclid=123',
-		'https://fx9gag.kxalex.workers.dev/gag/avb3v?utm_source=ig&fbclid=123',
+		'https://fx9gag.com/gag/avb3v?utm_source=ig&fbclid=123'
 	],
 	[
 		'https://www.9gag.com/gag/avb3v?utm_source=ig&fbclid=123&gclid=123',
-		'https://fx9gag.kxalex.workers.dev/gag/avb3v?utm_source=ig&fbclid=123&gclid=123',
+		'https://fx9gag.com/gag/avb3v?utm_source=ig&fbclid=123&gclid=123',
 	],
 ];
 
@@ -118,7 +121,7 @@ describe('9gag', () => {
 // 	x url https://x.com/someUser/status/1793138989769314393`;
 //
 // 		const expected_msg = `Test message https://9gag.com/gag/avb3v
-// 	9gag with tracking https://fx9gag.kxalex.workers.dev/gag/avb3v
+// 	9gag with tracking https://fx9gag.com/gag/avb3v
 // 	reddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
 // 	instagram url https://ddinstagram.com/reel/C7XX1y9XX9Q/
 // 	x url https://fixupx.com/someUser/status/1793138989769314393`;
