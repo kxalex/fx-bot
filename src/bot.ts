@@ -23,7 +23,14 @@ async function onMessageUrl(ctx: Filter<Context, 'message'>, env: Env) {
 				return;
 			}
 
-			const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text, chat.settings.features);
+			const features = chat.settings.features || {
+				gag: false,
+				instagram: true,
+				reddit: true,
+				x: true,
+				tiktok: true,
+			};
+			const [updated, updated_msg] = cleanAndFixUrls(ctx.msg.text, features);
 			console.log('Updated message: ', updated_msg);
 			if (updated) {
 				const msg = `${updated_msg}`;

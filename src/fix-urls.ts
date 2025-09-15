@@ -29,7 +29,7 @@ function fixInstagram(url: URL) {
 	}
 
 	const newUrl = new URL(url);
-	newUrl.host = 'ddinstagram.com';
+	newUrl.host = 'eeinstagram.com';
 	return newUrl;
 }
 

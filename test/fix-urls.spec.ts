@@ -9,7 +9,7 @@ describe('all in one message', () => {
 	9gag with tracking https://9gag.com/gag/avb3v?utm_source=ig
 	rxddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
 	reddit url https://reddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
-	ddinstagram url https://ddinstagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa
+	eeinstagram url https://eeinstagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa
 	instagram url https://instagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa
 	fixupx url https://fixupx.com/someUser/status/1793138989769314393
 	x url https://x.com/someUser/status/1793138989769314393
@@ -20,8 +20,8 @@ describe('all in one message', () => {
 	9gag with tracking https://fx9gag.com/gag/avb3v
 	rxddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
 	reddit url https://rxddit.com/r/aww/comments/qzr8j6/this_is_why_i_love_my_dog/
-	ddinstagram url https://ddinstagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa
-	instagram url https://ddinstagram.com/reel/C7XX1y9XX9Q/
+	eeinstagram url https://eeinstagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa
+	instagram url https://eeinstagram.com/reel/C7XX1y9XX9Q/
 	fixupx url https://fixupx.com/someUser/status/1793138989769314393
 	x url https://fixupx.com/someUser/status/1793138989769314393
 	`;

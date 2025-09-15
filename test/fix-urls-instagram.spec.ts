@@ -6,28 +6,28 @@ const urls = [
 	// prettier-ignore
 	[
 		'https://instagram.com/reel/C7XX1y9XX9Q',
-		'https://ddinstagram.com/reel/C7XX1y9XX9Q'
+		'https://eeinstagram.com/reel/C7XX1y9XX9Q'
 	],
 	[
 		'https://instagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
-		'https://ddinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
+		'https://eeinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
 	],
 	[
 		'https://www.instagram.com/p/C8mqrf_ySBs/?igsh=MTRoN2I0NXdnaXkwYw%3D%3D&img_index=5',
-		'https://ddinstagram.com/p/C8mqrf_ySBs/?igsh=MTRoN2I0NXdnaXkwYw%3D%3D&img_index=5',
+		'https://eeinstagram.com/p/C8mqrf_ySBs/?igsh=MTRoN2I0NXdnaXkwYw%3D%3D&img_index=5',
 	],
 	[
 		'https://instagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
-		'https://ddinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
+		'https://eeinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
 	],
-	['https://www.instagram.com/reel/C7XX1y9XX9Q', 'https://ddinstagram.com/reel/C7XX1y9XX9Q'],
+	['https://www.instagram.com/reel/C7XX1y9XX9Q', 'https://eeinstagram.com/reel/C7XX1y9XX9Q'],
 	[
 		'https://www.instagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
-		'https://ddinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
+		'https://eeinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123',
 	],
 	[
 		'https://www.instagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
-		'https://ddinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
+		'https://eeinstagram.com/reel/C7XX1y9XX9Q?utm_source=ig&fbclid=123&gclid=123',
 	],
 ];
 
@@ -43,12 +43,12 @@ describe('instagram', () => {
 
 		it.each(
 			invalidUrls.concat(
-				['https://www.ddinstagram.com'],
-				['https://www.ddinstagram.com/reel'],
-				['https://www.ddinstagram.com/reel/'],
-				['https://www.ddinstagram.com/?utm_source=ig&fbclid=123&gclid=123'],
-				['https://www.ddinstagram.com/reel?utm_source=ig&fbclid=123&gclid=123'],
-				['https://www.ddinstagram.com/reel/?utm_source=ig&fbclid=123&gclid=123'],
+				['https://www.eeinstagram.com'],
+				['https://www.eeinstagram.com/reel'],
+				['https://www.eeinstagram.com/reel/'],
+				['https://www.eeinstagram.com/?utm_source=ig&fbclid=123&gclid=123'],
+				['https://www.eeinstagram.com/reel?utm_source=ig&fbclid=123&gclid=123'],
+				['https://www.eeinstagram.com/reel/?utm_source=ig&fbclid=123&gclid=123'],
 			),
 		)(`should return false for %s`, (url) => {
 			expect(isInstagram(new URL(url))).toBe(false);
@@ -62,12 +62,12 @@ describe('instagram', () => {
 
 		it.each(
 			invalidUrls.concat(
-				['https://www.ddinstagram.com'],
-				['https://www.ddinstagram.com/gag'],
-				['https://www.ddinstagram.com/gag/'],
-				['https://www.ddinstagram.com/?utm_source=ig&fbclid=123&gclid=123'],
-				['https://www.ddinstagram.com/gag?utm_source=ig&fbclid=123&gclid=123'],
-				['https://www.ddinstagram.com/gag/?utm_source=ig&fbclid=123&gclid=123'],
+				['https://www.eeinstagram.com'],
+				['https://www.eeinstagram.com/gag'],
+				['https://www.eeinstagram.com/gag/'],
+				['https://www.eeinstagram.com/?utm_source=ig&fbclid=123&gclid=123'],
+				['https://www.eeinstagram.com/gag?utm_source=ig&fbclid=123&gclid=123'],
+				['https://www.eeinstagram.com/gag/?utm_source=ig&fbclid=123&gclid=123'],
 			),
 		)(`should not fix url for %s`, (url) => {
 			expect(fixInstagram(new URL(url))).toEqual(new URL(url));

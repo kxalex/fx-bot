@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:test';
 import { describe, it, expect, beforeAll } from 'vitest';
-import { upsertChat, getChat, updateChatSettings } from '../src/Chat';
+import { upsertChat, getChat, updateChatSettings } from '../src/chat';
 
 describe('Chat', () => {
 	beforeAll(async () => {

@@ -1,0 +1,14 @@
+= Deploy
+
+[source,bash]
+----
+# install pnpm
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+# install dependencies and run tests
+pnpm install
+pnpm test
+
+# deploy
+npx wrangler deploy
+----

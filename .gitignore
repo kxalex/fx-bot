@@ -134,3 +134,6 @@ dist
 .wrangler/
 wrangler.toml
 
+# Configuration files
+.dev.vars
+

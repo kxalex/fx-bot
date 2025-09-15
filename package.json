@@ -15,14 +15,14 @@
     "grammy": "^1.25.2"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "~0.4.7",
-    "@cloudflare/workers-types": "~4.20240603.0",
-    "@vitest/coverage-istanbul": "^1.6.0",
-    "@vitest/ui": "^1.6.0",
-    "prettier": "3.3.1",
-    "typescript": "~5.4.5",
-    "vitest": "1.5.3",
-    "wrangler": "^3.62.0"
+    "@cloudflare/vitest-pool-workers": "~0.9.0",
+    "@cloudflare/workers-types": "~4.20250913.0",
+    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "prettier": "3.6.2",
+    "typescript": "~5.9.2",
+    "vitest": "3.2.4",
+    "wrangler": "^4.36.0"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }

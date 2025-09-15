@@ -9,9 +9,9 @@ interface Chat {
 }
 
 interface ChatSettings {
-	deleteOriginalPost: boolean;
-	disabled: boolean;
-	features: Features;
+	deleteOriginalPost?: boolean;
+	disabled?: boolean;
+	features?: Features;
 }
 
 function getChat(env: Env, chatId: number): Promise<Chat | null> {
