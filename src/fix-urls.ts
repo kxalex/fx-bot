@@ -39,7 +39,7 @@ function fixTiktok(url: URL) {
 	}
 
 	const newUrl = new URL(url);
-	newUrl.host = url.host.replace('tiktok.com', 'vxtiktok.com');
+	newUrl.host = url.host.replace('tiktok.com', 'kktiktok.com');
 	return newUrl;
 }
 

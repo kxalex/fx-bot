@@ -5,20 +5,20 @@ import { cleanAndFixUrlsTest } from './fix-urls-common';
 // prettier-ignore
 const urls = [
 		// tiktok.com
-		['https://tiktok.com/@muztvzq/video/7371692885990722821', 'https://vxtiktok.com/@muztvzq/video/7371692885990722821'],
-		['https://tiktok.com/@muztvzq/video/7371692885990722821?#test', 'https://vxtiktok.com/@muztvzq/video/7371692885990722821?#test'],
-		['https://tiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc', 'https://vxtiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc'],
+		['https://tiktok.com/@muztvzq/video/7371692885990722821', 'https://kktiktok.com/@muztvzq/video/7371692885990722821'],
+		['https://tiktok.com/@muztvzq/video/7371692885990722821?#test', 'https://kktiktok.com/@muztvzq/video/7371692885990722821?#test'],
+		['https://tiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc', 'https://kktiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc'],
 		// www.tiktok.com
-		['https://www.tiktok.com/@muztvzq/video/7371692885990722821', 'https://www.vxtiktok.com/@muztvzq/video/7371692885990722821'],
-		['https://www.tiktok.com/@muztvzq/video/7371692885990722821?#pc', 'https://www.vxtiktok.com/@muztvzq/video/7371692885990722821?#pc'],
-		['https://www.tiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc', 'https://www.vxtiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc'],
+		['https://www.tiktok.com/@muztvzq/video/7371692885990722821', 'https://www.kktiktok.com/@muztvzq/video/7371692885990722821'],
+		['https://www.tiktok.com/@muztvzq/video/7371692885990722821?#pc', 'https://www.kktiktok.com/@muztvzq/video/7371692885990722821?#pc'],
+		['https://www.tiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc', 'https://www.kktiktok.com/@muztvzq/video/7371692885990722821?is_from_webapp=1&sender_device=pc'],
 		// vm.tiktok.com
-		['https://vm.tiktok.com/ZMrY3Fcm6', 'https://vm.vxtiktok.com/ZMrY3Fcm6'],
-		['https://vm.tiktok.com/ZMr2sWyu9', 'https://vm.vxtiktok.com/ZMr2sWyu9'],
-		['https://vm.tiktok.com/ZMrY3Fcm6#1', 'https://vm.vxtiktok.com/ZMrY3Fcm6#1'],
-		['https://vm.tiktok.com/ZMrY3Fcm6?#1', 'https://vm.vxtiktok.com/ZMrY3Fcm6?#1'],
-		['https://vm.tiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123', 'https://vm.vxtiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123'],
-		['https://vm.tiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123&gclid=123', 'https://vm.vxtiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123&gclid=123'],
+		['https://vm.tiktok.com/ZMrY3Fcm6', 'https://vm.kktiktok.com/ZMrY3Fcm6'],
+		['https://vm.tiktok.com/ZMr2sWyu9', 'https://vm.kktiktok.com/ZMr2sWyu9'],
+		['https://vm.tiktok.com/ZMrY3Fcm6#1', 'https://vm.kktiktok.com/ZMrY3Fcm6#1'],
+		['https://vm.tiktok.com/ZMrY3Fcm6?#1', 'https://vm.kktiktok.com/ZMrY3Fcm6?#1'],
+		['https://vm.tiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123', 'https://vm.kktiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123'],
+		['https://vm.tiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123&gclid=123', 'https://vm.kktiktok.com/ZMrY3Fcm6?utm_source=ig&fbclid=123&gclid=123'],
 ];
 
 const validUrls = urls.map((v) => v[0]);
