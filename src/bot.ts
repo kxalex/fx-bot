@@ -1,4 +1,4 @@
-import { Bot, CommandContext, Context, Filter } from 'grammy';
+import { Bot, CommandContext, Context, Filter, NextFunction } from 'grammy';
 import { cleanAndFixUrls } from './fix-urls';
 import { upsertChat } from './chat';
 
@@ -10,6 +10,23 @@ async function startCommand(ctx: CommandContext<Context>): Promise<void> {
 
 async function onNewChatMembersMe(ctx: Context): Promise<void> {
 	await ctx.reply('Hello, world!');
+}
+
+async function onSpecificUserMessage(
+	ctx: Filter<Context, 'message'>,
+	next: NextFunction,
+): Promise<void> {
+	const userId = ctx.msg.from?.id;
+	const chatType = ctx.msg.chat.type;
+
+	/*
+	if (userId === 302927541 && (chatType === 'group' || chatType === 'supergroup')) {
+		await ctx.reply('test', {
+			reply_to_message_id: ctx.msg.message_id,
+		});
+	}*/
+
+	await next();
 }
 
 async function onMessageUrl(ctx: Filter<Context, 'message'>, env: Env) {
@@ -63,6 +80,7 @@ async function onMessageUrl(ctx: Filter<Context, 'message'>, env: Env) {
 export async function handleBotUpdate(bot: Bot, env: Env): Promise<void> {
 	bot.command('start', startCommand);
 	bot.on(':new_chat_members:me', onNewChatMembersMe);
+	bot.on('message', onSpecificUserMessage);
 	bot.on('message::url', (ctx) => onMessageUrl(ctx, env));
 }
 
