@@ -29,7 +29,7 @@ function fixInstagram(url: URL) {
 	}
 
 	const newUrl = new URL(url);
-	newUrl.host = 'eeinstagram.com';
+	newUrl.host = 'kkclip.com';
 	return newUrl;
 }
 
@@ -39,7 +39,7 @@ function fixTiktok(url: URL) {
 	}
 
 	const newUrl = new URL(url);
-	newUrl.host = url.host.replace('tiktok.com', 'kktiktok.com');
+	newUrl.host = url.host.replace('tiktok.com', 'kkclip.com');
 	return newUrl;
 }
 
