@@ -2,6 +2,7 @@
   "name": "fx-bot",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
@@ -12,17 +13,17 @@
     "prettier": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" vitest.config.ts"
   },
   "dependencies": {
-    "grammy": "^1.25.2"
+    "grammy": "^1.43.0"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "~0.9.0",
-    "@cloudflare/workers-types": "~4.20250913.0",
-    "@vitest/coverage-istanbul": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
-    "prettier": "3.6.2",
-    "typescript": "~5.9.2",
-    "vitest": "3.2.4",
-    "wrangler": "^4.36.0"
+    "@cloudflare/vitest-pool-workers": "~0.16.14",
+    "@cloudflare/workers-types": "~4.20260610.1",
+    "@vitest/coverage-istanbul": "^4.1.8",
+    "@vitest/ui": "^4.1.8",
+    "prettier": "3.8.4",
+    "typescript": "~6.0.3",
+    "vitest": "4.1.8",
+    "wrangler": "^4.99.0"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }

@@ -1,9 +1,13 @@
 import { env } from 'cloudflare:test';
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { upsertChat, getChat, updateChatSettings } from '../src/chat';
 
 describe('Chat', () => {
-	beforeAll(async () => {
+	// Storage isolation is per test file (not per test) since vitest-pool-workers v4,
+	// so reset the relevant chats before each test to keep them independent.
+	beforeEach(async () => {
+		await env.KV_CHATS.delete('0');
+		await env.KV_CHATS.delete('123');
 		await upsertChat(env, 0, 'existing chat', 'private');
 	});
 
