@@ -13,6 +13,8 @@ describe('all in one message', () => {
 	instagram url https://instagram.com/reel/C7XX1y9XX9Q/?igsh=amt1eWtjeG9sa
 	fixupx url https://fixupx.com/someUser/status/1793138989769314393
 	x url https://x.com/someUser/status/1793138989769314393
+	fixthreads url https://fixthreads.seria.moe/@someUser/post/DQ123
+	threads url https://www.threads.com/@someUser/post/DQ123?xmt=abc
 	`;
 
 		const expected_msg = `Test message https://fx9gag.com/gag/avb3v
@@ -24,11 +26,22 @@ describe('all in one message', () => {
 	instagram url https://kkclip.com/reel/C7XX1y9XX9Q/
 	fixupx url https://fixupx.com/someUser/status/1793138989769314393
 	x url https://fixupx.com/someUser/status/1793138989769314393
+	fixthreads url https://fixthreads.seria.moe/@someUser/post/DQ123
+	threads url https://fixembed.app/embed?url=https%3A%2F%2Fwww.threads.com%2F%40someUser%2Fpost%2FDQ123
 	`;
 
 		const [updated, actual_msg] = cleanAndFixUrls(msg, allFeaturesEnabled);
 		expect(updated).toBe(true);
 		expect(actual_msg).toBe(expected_msg);
+	});
+
+	it('should not rewrite Threads with the feature disabled', () => {
+		const features = { ...allFeaturesEnabled, threads: false };
+		const given_msg = `Test message https://threads.com/@someUser/post/DQ123?xmt=abc`;
+
+		const [updated, actual_msg] = cleanAndFixUrls(given_msg, features);
+		expect(updated).toBe(false);
+		expect(actual_msg).toBe(given_msg);
 	});
 });
 

@@ -1,4 +1,4 @@
-import { Features } from './features';
+import { defaultFeatures, Features } from './features';
 
 interface Chat {
 	id: number;
@@ -28,13 +28,7 @@ async function upsertChat(env: Env, chatId: number, name: string, type: string):
 			settings: {
 				deleteOriginalPost: false,
 				disabled: false,
-				features: {
-					gag: false,
-					instagram: true,
-					reddit: true,
-					x: true,
-					tiktok: true,
-				},
+				features: { ...defaultFeatures },
 			},
 			lastUpdatedDate: new Date().toISOString(),
 		};

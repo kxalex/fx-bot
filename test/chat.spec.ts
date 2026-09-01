@@ -19,6 +19,9 @@ describe('Chat', () => {
 			type: 'group',
 			settings: {
 				deleteOriginalPost: false,
+				features: {
+					threads: true,
+				},
 			},
 		});
 	});

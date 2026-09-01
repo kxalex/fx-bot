@@ -6,19 +6,16 @@
  */
 import { Bot, webhookCallback } from 'grammy';
 import { handleBotUpdate, handleNonBotRequest } from './bot';
-import { ExecutionContext } from '@cloudflare/workers-types/experimental';
-
-// addEventListener('fetch', webhookCallback(bot, 'cloudflare'));
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-	async fetch(request: Request, env: Env, _ctx: ExecutionContext) {
-		//if (request.headers.get('x-telegram-bot-api-secret-token') === env.BOT_SECRET_TOKEN) {
-		const bot = new Bot(env.BOT_TOKEN);
-		await handleBotUpdate(bot, env);
-		return webhookCallback(bot, 'cloudflare-mod')(request);
-		// }
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (request.method !== 'POST') {
+			return handleNonBotRequest(request, env);
+		}
 
-		// return handleNonBotRequest(request, env);
+		const bot = new Bot(env.BOT_TOKEN);
+		handleBotUpdate(bot, env);
+		return webhookCallback(bot, 'cloudflare-mod')(request);
 	},
-};
+} satisfies ExportedHandler<Env>;

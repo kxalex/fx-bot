@@ -6,12 +6,14 @@ const regexX = /^(www\.)?x\.com/i;
 const regexTwitter = /^(www\.)?twitter\.com/i;
 const regexTiktok = /^(www\.|[a-z]{2}\.)?tiktok\.com/i;
 const regexReddit = /^(www\.)?reddit\.com/i;
+const regexThreads = /^(www\.)?threads\.(com|net)$/i;
 
 const is9gag = (url: URL) => regex9gag.test(url.host);
 const isInstagram = (url: URL) => regexInstagram.test(url.host);
 const isTiktok = (url: URL) => regexTiktok.test(url.host);
 const isX = (url: URL) => regexTwitter.test(url.host) || regexX.test(url.host);
 const isReddit = (url: URL) => regexReddit.test(url.host);
+const isThreads = (url: URL) => regexThreads.test(url.host);
 
 function fix9gag(url: URL): URL {
 	if (!is9gag(url)) {
@@ -63,6 +65,16 @@ function fixReddit(url: URL) {
 	return newUrl;
 }
 
+function fixThreads(url: URL) {
+	if (!isThreads(url)) {
+		return url;
+	}
+
+	const newUrl = new URL('https://fixembed.app/embed');
+	newUrl.searchParams.set('url', url.toString());
+	return newUrl;
+}
+
 // mutates the URL object
 function clean(url: URL): URL {
 	url.search = '';
@@ -94,6 +106,9 @@ function cleanAndFixUrls(str: string, features: Features): [boolean, string] {
 			} else if (isReddit(url) && features.reddit) {
 				newUrl = clean(fixReddit(url));
 				updated = true;
+			} else if (isThreads(url) && features.threads) {
+				newUrl = fixThreads(clean(url));
+				updated = true;
 			} else {
 				return urlString;
 			}
@@ -101,7 +116,10 @@ function cleanAndFixUrls(str: string, features: Features): [boolean, string] {
 			return newUrl.toString();
 		} catch (err) {
 			// Skip invalid URLs
-			console.error('Error cleaning URL %s: %s', urlString, err);
+			console.error({
+				event: 'url_clean_failed',
+				error: err instanceof Error ? err.message : String(err),
+			});
 			return urlString;
 		}
 	});
@@ -114,11 +132,13 @@ export {
 	is9gag,
 	isInstagram,
 	isReddit,
+	isThreads,
 	isTiktok,
 	isX,
 	fix9gag,
 	fixInstagram,
 	fixReddit,
+	fixThreads,
 	fixTiktok,
 	fixX,
 	cleanAndFixUrls,

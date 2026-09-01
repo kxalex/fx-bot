@@ -1,29 +1,29 @@
 {
-  "name": "fx-bot",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "start": "wrangler dev",
-    "test": "vitest --typecheck --coverage",
-    "cf-typegen": "wrangler types",
-    "set-webhook": "curl \"https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook?url=$TELEGRAM_WEBHOOK_URL\"",
-    "prettier": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" vitest.config.ts"
-  },
-  "dependencies": {
-    "grammy": "^1.43.0"
-  },
-  "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "~0.16.14",
-    "@cloudflare/workers-types": "~4.20260610.1",
-    "@vitest/coverage-istanbul": "^4.1.8",
-    "@vitest/ui": "^4.1.8",
-    "prettier": "3.8.4",
-    "typescript": "~6.0.3",
-    "vitest": "4.1.8",
-    "wrangler": "^4.99.0"
-  },
-  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
+	"name": "fx-bot",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "vitest --typecheck --coverage",
+		"cf-typegen": "wrangler types",
+		"set-webhook": "curl --fail --show-error --silent --request POST \"https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook\" --form \"url=$TELEGRAM_WEBHOOK_URL\"",
+		"prettier": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" vitest.config.ts"
+	},
+	"dependencies": {
+		"grammy": "^1.46.0"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "~0.22.0",
+		"@types/node": "26.4.0",
+		"@vitest/coverage-istanbul": "4.1.11",
+		"@vitest/ui": "4.1.11",
+		"prettier": "3.9.6",
+		"typescript": "~7.0.2",
+		"vitest": "4.1.11",
+		"wrangler": "^4.127.1"
+	},
+	"packageManager": "pnpm@11.25.0+sha512.5cde925b4f075f725eb71fbae18a42ffe784524789f19b61c731cb8721ec28aaee160e01a8d5af4fedb2a42cdbf300efe23db356b0d4a17b4d63e11f8ab7c956"
 }

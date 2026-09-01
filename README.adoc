@@ -1,14 +1,31 @@
+= Development
+
+[source,bash]
+----
+# enable the pnpm version pinned in package.json
+corepack enable
+
+# for a new checkout, create local Cloudflare configuration
+cp wrangler.sample.toml wrangler.toml
+cp .dev.vars.sample .dev.vars
+
+# install dependencies and run tests
+corepack pnpm install
+corepack pnpm run cf-typegen
+corepack pnpm test -- --run
+----
+
 = Deploy
 
 [source,bash]
 ----
-# install pnpm
-curl -fsSL https://get.pnpm.io/install.sh | sh -
+# configure the required production secret once
+corepack pnpm exec wrangler secret put BOT_TOKEN
 
-# install dependencies and run tests
-pnpm install
-pnpm test
+# export TELEGRAM_BOT_TOKEN and TELEGRAM_WEBHOOK_URL first
+# then register the Telegram webhook
+corepack pnpm run set-webhook
 
 # deploy
-npx wrangler deploy
+corepack pnpm run deploy
 ----

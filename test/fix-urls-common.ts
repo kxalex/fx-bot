@@ -5,6 +5,7 @@ const allFeaturesEnabled = {
 	instagram: true,
 	reddit: true,
 	tiktok: true,
+	threads: true,
 	x: true,
 	gag: true,
 };
